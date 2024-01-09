@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"TChat/models"
+	"TChat/pkg/models"
 	"gorm.io/gorm"
 )
 

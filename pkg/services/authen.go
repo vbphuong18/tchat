@@ -1,24 +1,23 @@
 package services
 
 import (
-	"TChat/repositories"
-	"TChat/utils"
+	"TChat/pkg/repositories"
 )
 
 type authen struct {
 	authenRepository repositories.AuthenRepository
 }
 
-func (a *authen) Login(userName string, password string) error {
-	user, err := a.authenRepository.GetUserByUserName(userName)
+func (a *authen) Login(userName string) (string, error) {
+	userModels, err := a.authenRepository.GetUserByUserName(userName)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return utils.CheckPasswordHash(user.Password, password)
+	return userModels.Password, nil
 }
 
 type AuthenService interface {
-	Login(userName string, password string) error
+	Login(userName string) (string, error)
 }
 
 func NewAuthenService(authenRepository repositories.AuthenRepository) AuthenService {

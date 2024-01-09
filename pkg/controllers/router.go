@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"TChat/repositories"
-	"TChat/services"
+	"TChat/pkg/middleware"
+	"TChat/pkg/repositories"
+	"TChat/pkg/services"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/driver/mysql"
@@ -34,12 +35,14 @@ func InitRouter() *gin.Engine {
 	apiGroup := r.Group("/api")
 	messageGroup := apiGroup.Group("/message")
 	{
+		messageGroup.Use(middleware.HTTPAuthentication)
 		messageGroup.POST("/create", messageHandler.CreateMessage)
 		messageGroup.GET("/list", messageHandler.ListMessage)
 		messageGroup.DELETE("/delete", messageHandler.DeleteMessage)
 	}
 	userGroup := apiGroup.Group("/user")
 	{
+		userGroup.Use(middleware.HTTPAuthentication)
 		userGroup.POST("/create", userHandler.CreateUser)
 		userGroup.GET("/list", userHandler.ListUser)
 		userGroup.GET("/search", userHandler.SearchUser)

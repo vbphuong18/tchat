@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"TChat/domain"
-	"TChat/dto"
-	"TChat/helper"
-	"TChat/services"
+	"TChat/pkg/domain"
+	"TChat/pkg/dto"
+	"TChat/pkg/helper"
+	"TChat/pkg/services"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"

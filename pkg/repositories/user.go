@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"TChat/domain"
-	"TChat/models"
+	"TChat/pkg/domain"
+	"TChat/pkg/models"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

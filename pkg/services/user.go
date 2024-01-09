@@ -1,8 +1,8 @@
 package services
 
 import (
-	"TChat/domain"
-	"TChat/repositories"
+	"TChat/pkg/domain"
+	"TChat/pkg/repositories"
 )
 
 type user struct {

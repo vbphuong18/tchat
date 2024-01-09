@@ -1,11 +1,14 @@
 package controllers
 
 import (
-	"TChat/dto"
-	"TChat/services"
+	"TChat/pkg/dto"
+	"TChat/pkg/services"
+	"TChat/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v5"
 	"net/http"
+	"time"
 )
 
 type AuthenHandler struct {
@@ -39,11 +42,31 @@ func (a *AuthenHandler) Login(ctx *gin.Context) {
 		httpStatus = http.StatusBadRequest
 		return
 	}
-	err = a.authenService.Login(request.UserName, request.Password)
+
+	p, err := a.authenService.Login(request.UserName)
 	if err != nil {
 		httpStatus = http.StatusInternalServerError
 		return
 	}
+	err = utils.CheckPasswordHash(p, request.Password)
+	if err != nil {
+		httpStatus = http.StatusUnauthorized
+		return
+	}
+	expirationTime := time.Now().Add(5 * time.Minute)
+	claims := &utils.Claims{
+		UserName: request.UserName,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(utils.JwtKey)
+	if err != nil {
+		httpStatus = http.StatusInternalServerError
+		return
+	}
+	ctx.SetCookie("token", tokenString, 5, "/", "", true, false)
 }
 
 func NewAuthenHandler(authenService services.AuthenService, v *validator.Validate) *AuthenHandler {

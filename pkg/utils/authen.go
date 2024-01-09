@@ -1,10 +1,18 @@
 package utils
 
 import (
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 	"html"
 	"strings"
 )
+
+var JwtKey = []byte("secret_key")
+
+type Claims struct {
+	UserName string `json:"user_name"`
+	jwt.RegisteredClaims
+}
 
 func Hash(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)

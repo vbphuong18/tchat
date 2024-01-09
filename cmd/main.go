@@ -1,7 +1,7 @@
 package main
 
 import (
-	"TChat/controllers"
+	"TChat/pkg/controllers"
 	"github.com/gin-gonic/gin"
 )
 
