@@ -47,10 +47,10 @@ type UserRepository interface {
 	ListUser() ([]models.User, error)
 	SearchUser(name string, phoneNumber string) ([]models.User, error)
 	DeleteUser(userID string) error
-}
+} // define method func
 
 func NewUserRepository(db *gorm.DB) UserRepository {
 	return &user{
 		db: db,
 	}
-}
+} // init object func

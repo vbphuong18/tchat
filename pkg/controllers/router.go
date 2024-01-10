@@ -19,18 +19,22 @@ func InitRouter() *gin.Engine {
 	if err != nil {
 		log.Fatalln(err) // thoát luôn rồi không cần phải return nữa
 	}
+	v := validator.New()
 	messageRepository := repositories.NewMessageRepository(db)
 	messageService := services.NewMessageService(messageRepository)
 	messageHandler := NewMessageHandler(messageService)
 
 	userRepository := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepository)
-	v := validator.New()
 	userHandler := NewUserHandler(userService, v)
 
 	authenRepository := repositories.NewAuthenRepository(db)
 	authenService := services.NewAuthenService(authenRepository)
 	authenHandler := NewAuthenHandler(authenService, v)
+
+	friendRepository := repositories.NewFriendRepository(db)
+	friendService := services.NewFriendService(friendRepository)
+	friendHandler := NewFriendHandler(friendService, v)
 
 	apiGroup := r.Group("/api")
 	messageGroup := apiGroup.Group("/message")
@@ -52,6 +56,10 @@ func InitRouter() *gin.Engine {
 	{
 		authenGroup.POST("/login", authenHandler.Login)
 		authenGroup.POST("/register", userHandler.CreateUser)
+	}
+	friendGroup := apiGroup.Group("/friend")
+	{
+		friendGroup.POST("/add-friend", friendHandler.CreateFriend)
 	}
 	return r
 }
