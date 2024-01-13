@@ -21,7 +21,7 @@ git clone https://github.com/vbphuong18/tchat.git
 
 **Install dependencies:** Move into the project root directory and install the necessary dependencies with the command:
 ```
-go get
+go mod tidy
 ```
 
 **Configuration:** Configure the necessary parameters to connect to the database and other settings.
@@ -33,6 +33,8 @@ go run main.go
 
 **Access the application:** Open a web browser and access the address http://localhost:8080 to use the TChat System.
 
+## Database Schema
+![Database Schema](docs/tchat_diagram.png)
 ## API Documentation Guides
 [api-documentation-guides.com](https://documenter.getpostman.com/view/23800911/2s9YsMAWij#1fc97a72-05a6-4404-ad63-0080966ab17b)
 ## Contribute
