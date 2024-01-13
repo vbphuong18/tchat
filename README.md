@@ -1,16 +1,16 @@
 # Tchat - Online messaging system
-TChat là một hệ thống chat trực tuyến, cho phép bạn quản lý người dùng, tin nhắn, đăng kí/đăng nhập và kết nối với nhau.
-
-# Chức năng
-- Quản lý người dùng: Người dùng có thể tạo mới, list, chỉnh sửa, tìm kiếm và xóa các tài khoản người dùng. Các chức năng quản lý người dùng bao gồm đổi mật khẩu, cập nhật thông tin cá nhân và xem danh sách người dùng khác.
-- Quản lý tin nhắn: Người dùng có thể gửi, nhận, list ra đoạn tin nhắn và xóa tin nhắn trong hệ thống. Các chức năng quản lý tin nhắn bao gồm xem lịch sử tin nhắn, tìm kiếm tin nhắn...
-- Đăng kí/Đăng nhập: Hệ thống cung cấp chức năng đăng kí và đăng nhập để người dùng có thể truy cập vào tài khoản của mình. Người dùng mới có thể đăng kí bằng cách cung cấp thông tin cá nhân cần thiết và tạo một tài khoản. Người dùng hiện có có thể đăng nhập bằng cách nhập thông tin đăng nhập của mình.
-- Kết nối người dùng: TChat cho phép người dùng kết nối với nhau thông qua các cuộc trò chuyện trực tuyến. Người dùng có thể tìm kiếm và thêm bạn bè, list ra danh sách bạn bè, xóa kết bạn, tạo, tham gia, nhắn tin và thoát khỏi các nhóm chat, và tương tác với nhau thông qua tin nhắn.
+TChat is an online chat system that allows you to manage users, messages, register/log in and connect with each other.
+# Function
+- User management: Users can create, list, edit, search and delete user accounts. User management functions include changing passwords, updating personal information and viewing a list of other users.
+- Message management: Users can send, receive, list messages and delete messages in the system. Message management functions include viewing message history, searching for messages...
+- Register/Login: The system provides registration and login functions so users can access their accounts. New users can register by providing the necessary personal information and creating an account. Existing users can log in by entering their credentials.
+- User connection: TChat allows users to connect with each other through online chats. Users can search and add friends, list friends, delete friends, create, join, message and leave chat groups, and interact with each other through messages.
 
 # Install and Run
 ## System requirements: Make sure that your system meets the following installation requirements:
-- Go (version go1.19.12)
+- Go
 - MySQL
+- Redis
 ...
 ## Clone repository: Clone the TChat repository to your computer by running the following command:
 ```
@@ -33,5 +33,5 @@ https://documenter.getpostman.com/view/23800911/2s9YsMAWij#1fc97a72-05a6-4404-ad
 If you want to contribute to the TChat project, follow these steps:
 - Fork the project and create a new branch for your feature or modification.
 - Commit and push your changes to the new branch.
-- Create a pull request to submit your changes to the main development team.
+- Create a pull request to submit your changes to the main development team. 
 I welcome all contributions and contributions from the programming community. Thank you!
