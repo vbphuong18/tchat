@@ -34,8 +34,21 @@ func (u *user) ListUser() ([]models.User, error) {
 
 func (u *user) SearchUser(name string, phoneNumber string) ([]models.User, error) {
 	var search []models.User
-	err := u.db.Where("name like ? or phone_number = ?", "%"+name+"%", phoneNumber).Find(&search).Error
+	tx := u.db
+	if name != "" {
+		tx = tx.Where("name like ?", "%"+name+"%")
+	}
+	if phoneNumber != "" {
+		tx = tx.Or("phone_number = ?", phoneNumber)
+	}
+	err := tx.Find(&search).Error
 	return search, err
+}
+
+func (u *user) GetUserByUserID(userID string) (models.User, error) {
+	var user models.User
+	err := u.db.Where("user_id = ?", userID).First(&user).Error
+	return user, err
 }
 
 func (u *user) DeleteUser(userID string) error {
@@ -46,6 +59,7 @@ type UserRepository interface {
 	CreateUser(user domain.User) error
 	ListUser() ([]models.User, error)
 	SearchUser(name string, phoneNumber string) ([]models.User, error)
+	GetUserByUserID(userID string) (models.User, error)
 	DeleteUser(userID string) error
 } // define method func
 

@@ -20,21 +20,21 @@ func InitRouter() *gin.Engine {
 		log.Fatalln(err) // thoát luôn rồi không cần phải return nữa
 	}
 	v := validator.New()
-	messageRepository := repositories.NewMessageRepository(db)
-	messageService := services.NewMessageService(messageRepository)
-	messageHandler := NewMessageHandler(messageService)
+	authenRepository := repositories.NewAuthenRepository(db)
+	authenService := services.NewAuthenService(authenRepository)
+	authenHandler := NewAuthenHandler(authenService, v)
 
 	userRepository := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepository)
 	userHandler := NewUserHandler(userService, v)
 
-	authenRepository := repositories.NewAuthenRepository(db)
-	authenService := services.NewAuthenService(authenRepository)
-	authenHandler := NewAuthenHandler(authenService, v)
-
 	friendRepository := repositories.NewFriendRepository(db)
 	friendService := services.NewFriendService(friendRepository)
-	friendHandler := NewFriendHandler(friendService, v)
+	friendHandler := NewFriendHandler(friendService, userService, v)
+
+	messageRepository := repositories.NewMessageRepository(db)
+	messageService := services.NewMessageService(messageRepository)
+	messageHandler := NewMessageHandler(messageService, userService, v)
 
 	apiGroup := r.Group("/api")
 	messageGroup := apiGroup.Group("/message")
@@ -50,6 +50,7 @@ func InitRouter() *gin.Engine {
 		userGroup.POST("/create", userHandler.CreateUser)
 		userGroup.GET("/list", userHandler.ListUser)
 		userGroup.GET("/search", userHandler.SearchUser)
+		userGroup.GET("/get-user-by-user-id", userHandler.GetUserByUserID)
 		userGroup.DELETE("/delete", userHandler.DeleteUser)
 	}
 	authenGroup := apiGroup.Group("/authen")
@@ -60,6 +61,8 @@ func InitRouter() *gin.Engine {
 	friendGroup := apiGroup.Group("/friend")
 	{
 		friendGroup.POST("/add-friend", friendHandler.CreateFriend)
+		friendGroup.GET("/list-friend", friendHandler.ListFriend)
+		friendGroup.DELETE("/delete-friend", friendHandler.DeleteFriend)
 	}
 	return r
 }

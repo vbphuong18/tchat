@@ -24,6 +24,11 @@ type SearchUserResponse struct {
 	Data []User `json:"data"`
 }
 
+type GetUserByUserIDResponse struct {
+	StatusError
+	Data User `json:"data"`
+}
+
 type DeleteUserResponse struct {
 	StatusError
 }

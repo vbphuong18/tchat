@@ -5,6 +5,7 @@ import (
 	"TChat/pkg/dto"
 	"TChat/pkg/services"
 	"TChat/pkg/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
@@ -115,6 +116,7 @@ func (u *UserHandler) SearchUser(ctx *gin.Context) {
 	}()
 	name := ctx.Query("name")
 	phoneNumber := ctx.Query("phone_number")
+	fmt.Println(phoneNumber)
 	if name == "" && phoneNumber == "" {
 		httpStatus = http.StatusBadRequest
 		return
@@ -136,6 +138,38 @@ func (u *UserHandler) SearchUser(ctx *gin.Context) {
 		})
 	} // convert srchDomain to srchDto
 	response.Data = srchDto
+	return
+}
+
+func (u *UserHandler) GetUserByUserID(ctx *gin.Context) {
+	var (
+		response   dto.GetUserByUserIDResponse
+		httpStatus = http.StatusOK
+	)
+	defer func() {
+		if httpStatus != http.StatusOK {
+			response.ReturnCode = 2
+			response.ReturnMessage = "Fail"
+		} else {
+			response.ReturnCode = 1
+			response.ReturnMessage = "Ok"
+		}
+		ctx.JSON(httpStatus, response)
+	}()
+	userID := ctx.Query("user_id")
+	userDomain, err := u.userService.GetUserByUserID(userID)
+	if err != nil {
+		httpStatus = http.StatusInternalServerError
+		return
+	}
+	response.Data = dto.User{
+		UserID:      userDomain.UserID,
+		DateOfBirth: userDomain.DateOfBirth,
+		Name:        userDomain.Name,
+		Gender:      dto.GenderType(userDomain.Gender),
+		AvtImg:      userDomain.AvtImg,
+		CoverImg:    userDomain.CoverImg,
+	}
 	return
 }
 

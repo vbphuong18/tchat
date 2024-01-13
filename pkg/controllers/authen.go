@@ -42,7 +42,6 @@ func (a *AuthenHandler) Login(ctx *gin.Context) {
 		httpStatus = http.StatusBadRequest
 		return
 	}
-
 	p, err := a.authenService.Login(request.UserName)
 	if err != nil {
 		httpStatus = http.StatusInternalServerError
@@ -53,7 +52,7 @@ func (a *AuthenHandler) Login(ctx *gin.Context) {
 		httpStatus = http.StatusUnauthorized
 		return
 	}
-	expirationTime := time.Now().Add(5 * time.Minute)
+	expirationTime := time.Now().Add(148 * time.Hour)
 	claims := &utils.Claims{
 		UserName: request.UserName,
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -66,7 +65,7 @@ func (a *AuthenHandler) Login(ctx *gin.Context) {
 		httpStatus = http.StatusInternalServerError
 		return
 	}
-	ctx.SetCookie("token", tokenString, 5, "/", "", true, false)
+	ctx.SetCookie("token", tokenString, 148*60, "/", "", true, false)
 }
 
 func NewAuthenHandler(authenService services.AuthenService, v *validator.Validate) *AuthenHandler {

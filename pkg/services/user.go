@@ -51,6 +51,21 @@ func (u *user) SearchUser(name string, phoneNumber string) ([]domain.User, error
 	return srch, nil
 }
 
+func (u *user) GetUserByUserID(userID string) (domain.User, error) {
+	userModel, err := u.userRepository.GetUserByUserID(userID)
+	if err != nil {
+		return domain.User{}, err
+	}
+	return domain.User{
+		UserID:      userModel.UserID,
+		DateOfBirth: userModel.DateOfBirth,
+		Name:        userModel.Name,
+		Gender:      domain.GenderType(userModel.Gender),
+		AvtImg:      userModel.AvtImg,
+		CoverImg:    userModel.CoverImg,
+	}, nil
+}
+
 func (u *user) DeleteUser(userID string) error {
 	return u.userRepository.DeleteUser(userID)
 }
@@ -59,6 +74,7 @@ type UserService interface {
 	CreateUser(user domain.User) error
 	ListUser() ([]domain.User, error)
 	SearchUser(name string, phoneNumber string) ([]domain.User, error)
+	GetUserByUserID(userID string) (domain.User, error)
 	DeleteUser(userID string) error
 }
 

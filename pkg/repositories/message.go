@@ -25,7 +25,7 @@ func (m *message) CreateMessage(chatMessage domain.ChatMessage) error {
 
 func (m *message) ListMessage(sendID string, receiveID string, startTime time.Time, endTime time.Time) ([]models.Message, error) {
 	var msg []models.Message
-	err := m.db.Where("send_id = ? and receive_id = ? and created_at > ? and created_at < ?", sendID, receiveID, startTime, endTime).Find(&msg).Error
+	err := m.db.Where("((send_id = ? and receive_id = ?) or (receive_id = ? and send_id = ?)) and created_at > ? and created_at < ?", sendID, receiveID, sendID, receiveID, startTime, endTime).Find(&msg).Error
 	return msg, err
 }
 

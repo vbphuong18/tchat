@@ -8,12 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
+	"sort"
 	"time"
 )
 
 type MessageHandler struct {
+	userService    services.UserService
 	messageService services.MessageService
-	v              validator.Validate
+	v              *validator.Validate
 }
 
 func (m *MessageHandler) CreateMessage(ctx *gin.Context) {
@@ -81,6 +83,16 @@ func (m *MessageHandler) ListMessage(ctx *gin.Context) {
 		httpStatus = http.StatusBadRequest
 		return
 	}
+	_, err = m.userService.GetUserByUserID(sendID)
+	if err != nil {
+		httpStatus = http.StatusBadRequest
+		return
+	}
+	_, err = m.userService.GetUserByUserID(receiveID)
+	if err != nil {
+		httpStatus = http.StatusBadRequest
+		return
+	}
 	msgDomain, err := m.messageService.ListMessage(sendID, receiveID, startTime, endTime)
 	if err != nil {
 		httpStatus = http.StatusInternalServerError
@@ -96,6 +108,9 @@ func (m *MessageHandler) ListMessage(ctx *gin.Context) {
 			CreatedAt: msgDomain[i].CreatedAt,
 		})
 	} // convert msgDomain to msgDto
+	sort.Slice(msgDto, func(i, j int) bool {
+		return msgDto[i].CreatedAt.After(msgDto[j].CreatedAt)
+	})
 	response.Data = msgDto
 	return
 }
@@ -123,6 +138,6 @@ func (m *MessageHandler) DeleteMessage(ctx *gin.Context) {
 	}
 }
 
-func NewMessageHandler(messageService services.MessageService) *MessageHandler {
-	return &MessageHandler{messageService: messageService}
+func NewMessageHandler(messageService services.MessageService, userService services.UserService, v *validator.Validate) *MessageHandler {
+	return &MessageHandler{messageService: messageService, userService: userService, v: v}
 }
