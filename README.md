@@ -7,30 +7,35 @@ TChat is an online chat system that allows you to manage users, messages, regist
 - User connection: TChat allows users to connect with each other through online chats. Users can search and add friends, list friends, delete friends, create, join, message and leave chat groups, and interact with each other through messages.
 
 ## Install and Run
+
 **System requirements:** Make sure that your system meets the following installation requirements:
 - Go
 - MySQL
 - Redis
 ...
+
 **Clone repository:** Clone the TChat repository to your computer by running the following command:
 ```
 git clone https://github.com/vbphuong18/tchat.git
 ```
+
 **Install dependencies:** Move into the project root directory and install the necessary dependencies with the command:
 ```
 go get
 ```
+
 **Configuration:** Configure the necessary parameters to connect to the database and other settings.
+
 **Run the application:** Run the TChat System with the command:
 ```
 go run main.go
 ```
+
 **Access the application:** Open a web browser and access the address http://localhost:8080 to use the TChat System.
 
 ## API Documentation Guides
 [api-documentation-guides.com](https://documenter.getpostman.com/view/23800911/2s9YsMAWij#1fc97a72-05a6-4404-ad63-0080966ab17b)
 ## Contribute
-***
 If you want to contribute to the TChat project, follow these steps:
 - Fork the project and create a new branch for your feature or modification.
 - Commit and push your changes to the new branch.
