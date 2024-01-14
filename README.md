@@ -37,10 +37,3 @@ go run main.go
 ![Database Schema](docs/tchat_diagram.png)
 ## API Documentation Guides
 [api-documentation-guides.com](https://documenter.getpostman.com/view/23800911/2s9YsMAWij#1fc97a72-05a6-4404-ad63-0080966ab17b)
-## Contribute
-If you want to contribute to the TChat project, follow these steps:
-- Fork the project and create a new branch for your feature or modification.
-- Commit and push your changes to the new branch.
-- Create a pull request to submit your changes to the main development team. 
-***
-I welcome all contributions and contributions from the programming community. Thank you!
