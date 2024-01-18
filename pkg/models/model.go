@@ -36,3 +36,14 @@ type Friend struct {
 	UserID1 string `gorm:"column:user_id_1"`
 	UserID2 string `gorm:"column:user_id_2"`
 }
+
+type Group struct {
+	GroupID string `gorm:"group_id"`
+	Name    string `gorm:"name"`
+	Avt     string `gorm:"avt"`
+}
+
+type GroupMember struct {
+	GroupID string `gorm:"group_id"`
+	UserID  string `gorm:"user_id"`
+}
