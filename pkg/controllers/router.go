@@ -36,6 +36,10 @@ func InitRouter() *gin.Engine {
 	messageService := services.NewMessageService(messageRepository)
 	messageHandler := NewMessageHandler(messageService, userService, v)
 
+	groupRepository := repositories.NewGroupRepository(db)
+	groupService := services.NewGroupService(groupRepository, userRepository)
+	groupHandler := NewGroupHandler(groupService, userService, v)
+
 	apiGroup := r.Group("/api")
 	messageGroup := apiGroup.Group("/message")
 	{
@@ -60,9 +64,14 @@ func InitRouter() *gin.Engine {
 	}
 	friendGroup := apiGroup.Group("/friend")
 	{
-		friendGroup.POST("/add-friend", friendHandler.CreateFriend)
-		friendGroup.GET("/list-friend", friendHandler.ListFriend)
-		friendGroup.DELETE("/delete-friend", friendHandler.DeleteFriend)
+		friendGroup.Use(middleware.HTTPAuthentication)
+		friendGroup.POST("/add", friendHandler.CreateFriend)
+		friendGroup.GET("/list", friendHandler.ListFriend)
+		friendGroup.DELETE("/delete", friendHandler.DeleteFriend)
+	}
+	groupGroup := apiGroup.Group("/group")
+	{
+		groupGroup.POST("/create", groupHandler.CreateGroup)
 	}
 	return r
 }

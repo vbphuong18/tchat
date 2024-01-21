@@ -35,6 +35,7 @@ func (u *UserHandler) CreateUser(ctx *gin.Context) {
 	err := ctx.ShouldBind(&request)
 	if err != nil {
 		httpStatus = http.StatusBadRequest
+		fmt.Println(err)
 		return
 	}
 	err = u.v.Struct(request)
