@@ -5,7 +5,6 @@ import (
 	"TChat/pkg/dto"
 	"TChat/pkg/services"
 	"TChat/pkg/utils"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
@@ -35,7 +34,6 @@ func (u *UserHandler) CreateUser(ctx *gin.Context) {
 	err := ctx.ShouldBind(&request)
 	if err != nil {
 		httpStatus = http.StatusBadRequest
-		fmt.Println(err)
 		return
 	}
 	err = u.v.Struct(request)
@@ -117,7 +115,6 @@ func (u *UserHandler) SearchUser(ctx *gin.Context) {
 	}()
 	name := ctx.Query("name")
 	phoneNumber := ctx.Query("phone_number")
-	fmt.Println(phoneNumber)
 	if name == "" && phoneNumber == "" {
 		httpStatus = http.StatusBadRequest
 		return

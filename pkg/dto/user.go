@@ -34,7 +34,7 @@ type DeleteUserResponse struct {
 }
 
 type CreateUserRequest struct {
-	PhoneNumber string     `json:"phone_number" validate:"required"`
+	PhoneNumber string     `json:"phone_number" validate:"required,e164"`
 	DateOfBirth time.Time  `json:"date_of_birth" validate:"required"`
 	Name        string     `json:"name" validate:"required"`
 	Email       string     `json:"email" validate:"required,email"`

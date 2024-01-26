@@ -50,7 +50,7 @@ func InitRouter() *gin.Engine {
 	}
 	userGroup := apiGroup.Group("/user")
 	{
-		userGroup.Use(middleware.HTTPAuthentication)
+		//userGroup.Use(middleware.HTTPAuthentication)
 		userGroup.POST("/create", userHandler.CreateUser)
 		userGroup.GET("/list", userHandler.ListUser)
 		userGroup.GET("/search", userHandler.SearchUser)
@@ -71,7 +71,11 @@ func InitRouter() *gin.Engine {
 	}
 	groupGroup := apiGroup.Group("/group")
 	{
+		//groupGroup.Use(middleware.HTTPAuthentication)
 		groupGroup.POST("/create", groupHandler.CreateGroup)
+		groupGroup.GET("/list-group-by-user-id", groupHandler.ListGroupByUserID)
+		groupGroup.GET("/get-group-by-group-id", groupHandler.GetGroupByGroupID)
+		groupGroup.POST("/add-member", groupHandler.AddMember)
 	}
 	return r
 }
